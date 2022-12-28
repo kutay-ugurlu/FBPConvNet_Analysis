@@ -3,15 +3,15 @@
 % 22 June 2017
 % contact : Kyong Jin (kyonghwan.jin@gmail.com)
 
-clear
-restoredefaultpath
-reset(gpuDevice(1))
+wipe
+% restoredefaultpath
+% reset(gpuDevice(1))
 run ./matconvnet-1.0-beta23/matlab/vl_setupnn
 
 load preproc_x20_ellipse_fullfbp.mat
-load('./pretrain/net-epoch-151.mat')
+load('training_result\26-Dec-2022_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-11.mat')
 
-cmode='gpu'; % 'cpu'
+cmode='cpu'; % 'cpu'
 if strcmp(cmode,'gpu')
     net = vl_simplenn_move(net, 'gpu') ;
 else

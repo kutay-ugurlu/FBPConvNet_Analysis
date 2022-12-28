@@ -2,10 +2,9 @@
 % modified from MatconvNet (ver.23)
 % 22 June 2017
 % contact : Kyong Jin (kyonghwan.jin@gmail.com)
-
-clear
-reset(gpuDevice(1))
-restoredefaultpath
+wipe
+% reset(gpuDevice(1))
+% restoredefaultpath
 run ./matconvnet-1.0-beta23/matlab/vl_setupnn
 
 load preproc_x20_ellipse_fullfbp.mat
@@ -26,12 +25,12 @@ imdb.images.orig=single(lab_n);     % output : H x W x C x N (X,Y,channel,batch)
 
 %% 
 opt='none';
-train_opts.useGpu = 'true'; %'false'
+train_opts.useGpu = 'false'; %'false'
 train_opts.gpus = 1 ;       % []
 train_opts.patchSize = 512;
 train_opts.batchSize = 1;
 train_opts.gradMax = 1e-2;
-train_opts.numEpochs = 151 ;
+train_opts.numEpochs = 11 ;
 train_opts.momentum = 0.99 ;
 train_opts.imdb=imdb;
 train_opts.expDir = fullfile('./training_result',[num2str(date) '_fbpconvent_ellipse_fullfbp_'],[opt '_x' num2str(dsr)] ,'/');

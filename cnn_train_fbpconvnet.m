@@ -83,6 +83,7 @@ if ~evaluateMode
 end
 
 % setup GPUs
+opts.gpus = [];
 numGpus = numel(opts.gpus) ;
 if numGpus > 1
     if isempty(gcp('nocreate')),
@@ -174,7 +175,7 @@ for epoch=start+1:opts.numEpochs
     if ~evaluateMode
         fprintf('%s: saving model for epoch %d\n', mfilename, epoch) ;
         tic ;
-        if mod(epoch,50)==1
+        if mod(epoch,10)==1
             save(modelPath(epoch), 'net', 'info') ;
         elseif epoch==1
             save(modelPath(epoch), 'net', 'info','opts') ;
