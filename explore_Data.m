@@ -13,3 +13,9 @@ R = radon(image2,theta);
 image2_back = iradon(R(2:2:end,2:2:end),subsampled_theta);
 subplot(1,2,2)
 imagesc(image2_back)
+
+figure
+subplot(1,2,1)
+imagesc(image1)
+subplot(1,2,2)
+imagesc(image2)
