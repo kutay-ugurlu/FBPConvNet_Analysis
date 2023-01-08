@@ -1,0 +1,47 @@
+wipe
+Data = struct2array(load("RawDataSynapseAbdomen.mat"));
+slice_data = 
+GT_array = Data;
+SS_array = Data;
+slice_begin = 1;
+n_views = 1000;
+subsampling_factor = 20;
+if_noise = 0;
+noise = 30; %dB:
+save_file_name = ['N_',num2str(n_views),'_SS_',num2str(subsampling_factor),'_Noise_',num2str(if_noise),'_SNR_',num2str(noise),'.mat'];
+
+if if_noise
+    for i = 1:length(files)
+        file = double(niftiread([folder,filesep,char(files(i))]));
+        slice_number = size(file,3);
+        slices_to_extract = floor(slice_number/4):floor(3*slice_number/4);
+        mid_scan = file(:,:,slices_to_extract);
+        slices = length(slices_to_extract);
+        slice_end = slice_begin + slices - 1;
+        [SS,GT] = radon_helper(mid_scan,n_views,subsampling_factor);
+        SS_array(:,:,1,slice_begin:slice_end) = SS;
+        GT_array(:,:,1,slice_begin:slice_end) = GT;
+        slice_begin = slice_end + 1;
+    end
+else
+    for i = 1:length(files)
+        file = double(niftiread([folder,filesep,char(files(i))]));
+        slice_number = size(file,3);
+        slices_to_extract = floor(slice_number/4):floor(3*slice_number/4);
+        mid_scan = file(:,:,slices_to_extract);
+        slices = length(slices_to_extract);
+        slice_end = slice_begin + slices - 1;
+        [SS,GT] = radon_helper(mid_scan,n_views,subsampling_factor);
+        SS_array(:,:,1,slice_begin:slice_end) = SS;
+        GT_array(:,:,1,slice_begin:slice_end) = GT;
+        slice_begin = slice_end + 1;
+    end
+end
+
+
+
+
+CT_data = struct();
+CT_data.lab_n = GT_array;
+CT_data.lab_g = SS_array;
+load(save_file_name, "CT_data", '-v7.3');

@@ -1,0 +1,6 @@
+EXP:N_1000_SS_20_Noise_0_SNR_30.mat:
+avg SNR (FBP) : 10.6223
+avg SNR (FBPconvNet) : 10.74
+EXP:N_1000_SS_20_Noise_1_SNR_30.mat:
+avg SNR (FBP) : 10.6223
+avg SNR (FBPconvNet) : 10.74
