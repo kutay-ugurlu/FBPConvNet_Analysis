@@ -1,0 +1,90 @@
+
+19-Jan-2023 12:52:07 EXP:N_1000_SS_5_Noise_1_SNR_20.mat:
+avg SNR (FBP) : 31.8355
+avg SNR (FBPconvNet) : 4.9248
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 12:54:26 EXP:N_1000_SS_5_Noise_1_SNR_20.mat:
+avg SNR (FBP) : 31.8355
+avg SNR (FBPconvNet) : 6.1412
+training_result\26-Dec-2022_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-11.mat
+
+19-Jan-2023 12:56:52 EXP:N_1000_SS_10_Noise_1_SNR_20.mat:
+avg SNR (FBP) : 22.6023
+avg SNR (FBPconvNet) : 4.6389
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 12:59:09 EXP:N_1000_SS_10_Noise_1_SNR_20.mat:
+avg SNR (FBP) : 22.6023
+avg SNR (FBPconvNet) : 5.4702
+training_result\26-Dec-2022_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-11.mat
+
+19-Jan-2023 13:01:24 EXP:N_1000_SS_20_Noise_0_SNR_30.mat:
+avg SNR (FBP) : 16.452
+avg SNR (FBPconvNet) : 4.3695
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 13:03:41 EXP:N_1000_SS_20_Noise_0_SNR_30.mat:
+avg SNR (FBP) : 16.452
+avg SNR (FBPconvNet) : 5.2863
+training_result\26-Dec-2022_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-11.mat
+
+19-Jan-2023 13:05:58 EXP:N_1000_SS_20_Noise_1_SNR_20.mat:
+avg SNR (FBP) : 16.3234
+avg SNR (FBPconvNet) : 4.3753
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 13:08:13 EXP:N_1000_SS_20_Noise_1_SNR_20.mat:
+avg SNR (FBP) : 16.3234
+avg SNR (FBPconvNet) : 5.2614
+training_result\26-Dec-2022_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-11.mat
+
+19-Jan-2023 13:10:28 EXP:N_1000_SS_20_Noise_1_SNR_30.mat:
+avg SNR (FBP) : 16.4398
+avg SNR (FBPconvNet) : 4.3699
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 13:12:46 EXP:N_1000_SS_20_Noise_1_SNR_30.mat:
+avg SNR (FBP) : 16.4398
+avg SNR (FBPconvNet) : 5.2817
+training_result\26-Dec-2022_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-11.mat
+
+19-Jan-2023 14:04:14 EXP:N_1000_SS_2_Noise_1_SNR_20.mat:
+avg SNR (FBP) : 42.7396
+avg SNR (FBPconvNet) : 5.0434
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 14:06:30 EXP:N_1000_SS_2_Noise_1_SNR_20.mat:
+avg SNR (FBP) : 42.7396
+avg SNR (FBPconvNet) : 6.5256
+training_result\26-Dec-2022_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-11.mat
+
+19-Jan-2023 14:08:45 EXP:N_1000_SS_2_Noise_0_SNR_20.mat:
+avg SNR (FBP) : 47.7898
+avg SNR (FBPconvNet) : 5.0584
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 14:11:02 EXP:N_1000_SS_2_Noise_0_SNR_20.mat:
+avg SNR (FBP) : 47.7898
+avg SNR (FBPconvNet) : 6.6405
+training_result\26-Dec-2022_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-11.mat
+
+19-Jan-2023 16:05:47 EXP:N_1000_SS_2_Noise_1_SNR_20.mat:
+avg SNR (FBP) : 39.9143
+avg SNR (FBPconvNet) : 28.7072
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 16:08:03 EXP:N_1000_SS_2_Noise_1_SNR_20.mat:
+avg SNR (FBP) : 39.9143
+avg SNR (FBPconvNet) : 30.2637
+training_result\26-Dec-2022_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-11.mat
+
+19-Jan-2023 16:10:19 EXP:N_1000_SS_2_Noise_0_SNR_20.mat:
+avg SNR (FBP) : 39.9143
+avg SNR (FBPconvNet) : 28.7072
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 16:12:34 EXP:N_1000_SS_2_Noise_0_SNR_20.mat:
+avg SNR (FBP) : 39.9143
+avg SNR (FBPconvNet) : 30.2637
+training_result\26-Dec-2022_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-11.mat

@@ -1,0 +1,55 @@
+
+19-Jan-2023 16:56:49:
+avg SNR (FBP) : 8.4438
+avg SNR (FBPconvNet) : 20.0605
+training_result\26-Dec-2022_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-11.mat
+
+19-Jan-2023 17:03:14:
+avg SNR (FBP) : 8.4438
+avg SNR (FBPconvNet) : 22.8482
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 17:32:06:
+With noise 20 dB avg SNR (FBP) : 8.4436
+avg SNR (FBPconvNet) : 22.8484
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 18:41:32:
+With noise 10 dB avg SNR (FBP) : 8.4416
+avg SNR (FBPconvNet) : 22.8498
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 18:54:13:
+With noise 10 dB SS: 20 avg SNR (FBP) : 10.2164
+avg SNR (FBPconvNet) : 17.481
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 19:11:39:
+With noise 10 dB SS: 8 avg SNR (FBP) : 17.9906
+avg SNR (FBPconvNet) : 10.8113
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 19:20:48:
+SS: 8 avg SNR (FBP) : 17.9907
+avg SNR (FBPconvNet) : 10.8113
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 19:33:48:
+SS: 20 avg SNR (FBP) : 10.2165
+avg SNR (FBPconvNet) : 17.481
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 20:01:17:
+Noise dB: 20 SS: 20 avg SNR (FBP) : 10.2165
+avg SNR (FBPconvNet) : 17.481
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 20:13:49:
+Noise dB: 10 SS: 20 avg SNR (FBP) : 10.2164
+avg SNR (FBPconvNet) : 17.4809
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
+
+19-Jan-2023 20:20:05:
+Noise dB: 10 SS: 10 avg SNR (FBP) : 0.0853
+avg SNR (FBPconvNet) : 0.083679
+training_result\08-Jan-2023_fbpconvent_ellipse_fullfbp_\none_x20\net-epoch-21.mat
