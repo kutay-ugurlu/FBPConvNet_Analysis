@@ -1,3 +1,8 @@
+# Analysis on FBPConvNet on MATLAB
+## The repository is forked from [this repository of the paper _Deep Convolutional Neural Network for Inverse Problems in Imaging_ ](https://github.com/panakino/FBPConvNet)
+
+The functions for [raw data processing](https://github.com/kutay-ugurlu/FBPConvNet_Analysis/blob/master/create_raw_data.m), [dataset creation](https://github.com/kutay-ugurlu/FBPConvNet_Analysis/blob/master/create_dataset.m), [radon transformer across scans with different parameters](https://github.com/kutay-ugurlu/FBPConvNet_Analysis/blob/master/radon_helper.m), [dynamic range streching](https://github.com/kutay-ugurlu/FBPConvNet_Analysis/blob/master/set_dynamic_range.m), [dataset visualization](https://github.com/kutay-ugurlu/FBPConvNet_Analysis/blob/master/visualize_dataset.m) and [evaluation script for SYNAPSE dataset](https://github.com/kutay-ugurlu/FBPConvNet_Analysis/blob/master/evaluation_modified.m) are developed by me.  
+
 # FBPConvNet - Matlab
 
 Deep Convolutional Neural Network for Inverse Problems in Imaging <br />
@@ -17,3 +22,6 @@ Readme
 contact : Kyong Jin (kyonghwan.jin@gmail.com), 
 
 special thanks to Junhong Min (Senior Researcher at Samsung Electronics) for providing initial codes.
+
+
+
