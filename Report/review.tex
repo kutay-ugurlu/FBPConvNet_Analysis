@@ -274,15 +274,92 @@ As we observe in \Cref{tab:res2}, the performance of the proposed network is low
 
 \clearpage
 
-\subsection{Replicated Experiment and Results}
+\subsection{Replicated Experiment and Results} \label{subsec:training}
 
-Two models are trained for 10 and 20 epochs with according scaled initial learning rates with respect to 100 epochs using the ellipsoid dataset provided in the original repository of the study. The better model is used in the evaluation of different testing configurations. 
+Two models are trained for 10 and 20 epochs with according scaled initial learning rates with respect to 100 epochs using the ellipsoid dataset provided in the original repository of the study, where the input images of the CNN are produced with FBP of the 50 view projections. The better model is used in the evaluation of different testing configurations. It is important to note that the network is undertrained when compared to the training configuration in the original study. 
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{images/training.png}
+\caption{Training and Validation Losses for 20 epochs}\label{fig:training}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{0.8\linewidth}
+\centering
+\includegraphics[width=\textwidth]{images/reprec10.png}
+\caption{100 views}\label{subfig:2a}
+\end{subfigure}
+\begin{subfigure}[b]{0.8\linewidth}
+\centering
+\includegraphics[width=\textwidth]{images/reprec20.png}
+\caption{50 views}\label{subfig:2b}
+\end{subfigure}
+\caption{Reconstructions for different number of views}
+\label{fig:reprecs}
+\end{figure}
+
+\vfill\null\newpage
 \subsubsection{Testing on Ellipsoid Dataset}
 
+Different sub-datasets are generated with noise and without noise and for different number of view angles using the ellipsoidal dataset to test the performance of the trained network. For the case illustrated in \Cref{fig:reprecs}, we observe that FBPConvNet generates outputs with SNRs 14.87 and 21.49 dB respectively. 
 
 
+\begin{table}[h]
+\centering{
+\begin{tabular}{|c|c|c|c|c|} \hline
+    \makecell{Experiment \\ Number} & \makecell{Subsampling \\ $\times N$} & \makecell{Noise \\ dB*} & \makecell{FBP \\ SNR(dB)} & \makecell{FBPConvNet \\ SNR(dB)} \\ \hline 
+    1 & 10 & -  & 15.88 & 11.83 \\
+    2 & 10 & 10 & 15.88 & 11.83 \\
+    3 & 20 & -  & 10.21 & 17.48 \\
+    4 & 20 & 10 & 10.21 & 17.48 \\
+    5 & 25 & -  & 8.67  & 17.89 \\
+    6 & 25 & 10 & 8.67  & 17.89 \\
+    7 & 50 & -  & 4.83  & 8.48 \\
+    8 & 50 & 10 & 4.83  & 8.48  \\\hline
+\end{tabular}}
+\caption{\label{tab:tabname}Experiment results for training configuration described in \Cref{subsec:training}. \newline * Noise SNR is described in \Cref{eq:noisesnr}}
+\end{table}
 
+\begin{equation}
+    SNR_{noise}: \frac{P_{signal}}{P_{noise}} = \frac{\sum |signal|^2}{|noise|^2
+    \label{eq:noisesnr}} 
+\end{equation}
+
+The experiments took 4 second per test image on CPU on average and they show that the trained model's performance peaks when  
+the input images' sinogram subsampling matches that of images in the training set. This is why the SNR of the reconstruction SNR values of reconstructions from FBPConvNet exhibit a non-monotonic behavior, whereas the performance of FBP is decreasing monotonically with decreasing number of projection view angles. Furthermore, it is observed that the added 10 dB SNR noise did not affect the reconstructions in SNR sense in the given precision, although the network is trained with noise-free images. To compare with the original study, although undertrained, the model showed similar success for 50 view in the ellipsoid dataset. 
+
+\subsubsection{Testing on SYNAPSE dataset}
+To test the generalization of the trained network on another dataset, the synapse dataset is utilized \cite{SYNAPSE}. This dataset is from MultiAtlas Labelling Challenge and is for segmentation purposes. Since it is open access, images from the dataset are utilized which includes scans that adds up to 3779 axial contrast-enhanced CT images. 
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{images/SS2.png}
+\caption{500 views}\label{subfig:3a}
+\end{subfigure}
+\begin{subfigure}[b]{\linewidth}
+\centering
+\includegraphics[width=0.7\textwidth]{images/SS5.png}
+\caption{200 views}\label{subfig:3b}
+\end{subfigure}
+\begin{subfigure}[b]{\linewidth}
+\centering
+\includegraphics[width=0.7\textwidth]{images/SS10.png}
+\caption{100 views}\label{subfig:3c}
+\end{subfigure}
+\caption{Reconstructions generated for SYNAPSE dataset for different number of views}
+\label{fig:Synapses}
+\end{figure}
+
+The reconstructions from \Cref{fig:Synapses} show that the trained network does not only learn the convolutional filters that correspond to $R^\ast R$ for FBP of subsampled sinograms or their inverse. Instead, the model also learned how to remove the artifacts of the "weak" reconstructions from subsampled sinograms fitting to the prior distribution of the images in the ellipsoid dataset. 
+
+\subsection{Conclusion}
+
+In this project, the study \textit{Deep Convolutional Neural Network for Inverse Problems in Imaging} is analyzed using the software provided and some of the results are replicated using the provided preprocessed ellipsoid dataset. For the training configuration used to replicate the study, the network improved the images generated by FBP, outperforming it by approximately 9dB. For other subsampling factors and the same dataset, FBPConvnet output qualitatively acceptable images. 
 \clearpage
 \printbibliography
 
