@@ -1,0 +1,142 @@
+\documentclass[journal, onecolumn, 11pt]{IEEEtran}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{pythonhighlight}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{pythonhighlight}
+\usepackage{changepage}
+\usepackage{slashbox}
+\usepackage{floatrow}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fontawesome}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{cleveref}
+\usepackage[style=ieeetran,style=numeric,sorting=none]{biblatex}
+\addbibresource{references.bib}
+\usepackage{color} 
+\usepackage[english]{babel}
+\usepackage{amsthm}
+\usepackage{makecell}
+\usepackage{diagbox}
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+
+
+\begin{equation}
+    p_{\theta}(t) = \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty}f(x,y)\delta(xcos(\theta)+ysin(\theta)-t) dx dy
+\end{equation}
+
+% \begin{equation}
+%     p_{\theta}(t) = \int\limits_{-\infty}^{+\infty}\int\limits_{0}^{\pi}f(x,y)\delta(xcos(\theta)+ysin(\theta)-t)d\theta dt
+% \end{equation}
+
+
+
+\begin{equation}
+    S_{\theta}(f) = \int\limits_{-\infty}^{+\infty}p_{\theta}(t)e^{-j2\pi ft}dt
+\end{equation}
+
+\begin{equation}
+    S_{\theta}(f) = \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty}f(x,y)\delta(xcos(\theta)+ysin(\theta)-t) e^{-j2\pi ft} dx dy dt
+\end{equation}
+
+\begin{equation}
+    S_{\theta}(f) = \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty}f(x,y)e^{-j2\pi \left(xcos(\theta)+ysin(\theta)\right)f}dxdy
+\end{equation}
+
+\begin{equation}
+    S_{\theta}(f) = \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty}f(x,y)e^{-j2\pi fcos(\theta) x}e^{-j2\pi fsin(\theta) y}dxdy
+\end{equation}
+
+\begin{align}
+    % f(x,y) &= \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty}\mathcal{F}(u,v)e^{-j2\pi{(ux+vy)}}du{dv} \label{eq:2DFFT} \\
+	u &= f \cos\theta \\
+	v &= f \sin\theta \\
+	% du dv &= |f| df d\theta \label{eq:Jacobian}
+	J &= \begin{vmatrix}
+		\frac{\partial u}{\partial f} & \frac{\partial v}{\partial f} \\ 
+		\frac{\partial u}{\partial \theta} & \frac{\partial v}{\partial \theta} 
+	\end{vmatrix} = \begin{vmatrix}
+		\cos\theta & \sin\theta \\ 
+		-f\sin\theta & f\cos\theta \\
+	\end{vmatrix} \\
+	&= f(\sin^2\theta + \cos^2\theta) = f
+	\end{align}
+% \end{gather}
+
+
+
+\begin{equation}
+    S_{\theta}(f) = \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty}f(x,y)e^{-j2\pi u x}e^{-j2\pi v y}dxdy = F(u,v) = F(f cos\theta,f sin\theta)
+\end{equation}
+
+
+\begin{equation}
+    \hat{f}(x,y) = \int\limits_{-\infty}^{+\infty}\int\limits_{0}^{\pi}p_(t,\theta)\delta(xcos(\theta)+ysin(\theta)-t) dt d\theta
+\end{equation}
+
+\begin{equation}
+    \hat{f}(x,y) = \int\limits_{0}^{\pi}p_(xcos(\theta)+ysin(\theta),\theta) d\theta
+\end{equation}
+
+\begin{equation}
+    p(t,\theta) = \int\limits_{-\infty}^{+\infty}S_{\theta}(f)e^{j2\pi ft}df
+\end{equation}
+
+
+
+\begin{equation}
+    \hat{f}(x,y) = \int\limits_{0}^{\pi}p_(xcos(\theta)+ysin(\theta),\theta) d\theta
+\end{equation}
+
+
+
+
+\begin{equation}
+    \hat{f}(x,y) = \int\limits_{0}^{\pi}\int\limits_{-\infty}^{+\infty}S_{\theta}(f)e^{j2\pi f(xcos(\theta)+ysin(\theta))}df d\theta
+\end{equation}
+
+
+
+\begin{equation}
+    \hat{f}(x,y) = \int\limits_{0}^{\pi}\int\limits_{-\infty}^{+\infty}S_{\theta}(f)e^{j2\pi (xu + yv)}|f|du dv
+\end{equation}
+
+
+
+\begin{equation}
+    f(x,y) = \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty}\mathcal{F}(u,v)e^{j2\pi u x}e^{j2\pi v y}dudv 
+\end{equation}
+
+
+\begin{align}
+    % f(x,y) &= \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty}\mathcal{F}(u,v)e^{-j2\pi{(ux+vy)}}du{dv} \label{eq:2DFFT} \\
+	u &= f \cos\theta \\
+	v &= f \sin\theta \\
+	% du dv &= |f| df d\theta \label{eq:Jacobian}
+	J &= \begin{vmatrix}
+		\frac{\partial u}{\partial f} & \frac{\partial v}{\partial f} \\ 
+		\frac{\partial u}{\partial \theta} & \frac{\partial v}{\partial \theta} 
+	\end{vmatrix} = \begin{vmatrix}
+		\cos\theta & \sin\theta \\ 
+		-f\sin\theta & f\cos\theta \\
+	\end{vmatrix} \\
+	&= f(\sin^2\theta + \cos^2\theta) = f
+	\end{align}
+% \end{gather}
+
+\begin{equation}
+	f(x,y) = \int\limits_0^\pi\int\limits_{-\infty}^{+\infty}S_{\theta}(f)|f|e^{j2\pi{f}(x cos\theta + y sin\theta)}df d\theta
+\end{equation}
+
+\begin{equation}
+	f(x,y) = \int\limits_0^\pi\int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty}S_{\theta}(f)|f|e^{j2\pi{f}t}\delta(x cos\theta + y sin\theta - t) df dt d\theta
+\end{equation}
+
+\end{document}
