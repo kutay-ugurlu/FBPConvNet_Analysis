@@ -24,6 +24,9 @@
 \usepackage{makecell}
 \usepackage{diagbox}
 \newtheorem{theorem}{Theorem}
+\usepackage{multicol}
+\newcommand{\Fourier}{$\mathcal{F}$}
+\newcommand{\FourierAdj}{$\mathcal{F}^\ast$}
 
 \author{Kutay Ugurlu}
 \title{Analysis of Deep Convolutional Neural Network for Inverse Problems in Imaging
@@ -37,9 +40,8 @@
 
 \section{Introduction}
 In this term project report, the study \textit{Analysis of Deep Convolutional Neural Network for Inverse Problems in Imaging} by Jin \textit{et al.} \cite{FBPConvNet} is going to be reviewed, the results are going to reproduced and the experiments are going to be conducted using another dataset which is going to be formed by hand. 
-\\
-\\
-The authors of the paper propose a convolutional neural network architecture mainly for the inverse problem of computerized tomography(CT) problems, while they stress that the proposed method is available for all normal-convolutional inverse problems. The study aims reconstructing the image from lower views by direct inversion followed by a convolutional neural network, more specifically a U-Net \cite{ronneberger2015u} based architecture. Starting from the observation that the normal operator $H^\ast H$, where $H^\ast$ is the adjoint operator of H that satisfies the relation $\langle f,H^\ast g \rangle = \langle Hf,g \rangle$, that appears as a forward model in a set of inverse problems, the authors investigate the relationship between the CNN models and the iterative optimization models.  
+
+The authors of the paper propose a convolutional neural network architecture mainly for the inverse problem of computerized tomography(CT) problems, while they stress that the proposed method is available for all normal-convolutional inverse problems. The study aims reconstructing the image from lower views by direct inversion followed by a convolutional neural network, more specifically a U-Net \cite{ronneberger2015u} based architecture. Starting from the observation that the normal operator $H^\ast H$, where $H^\ast$ is the adjoint operator of H that satisfies the relation $\langle f,H^\ast g \rangle = \langle Hf,g \rangle$, that appears as a forward model in a set of inverse problems, the authors investigate the relationship between the CNN models and the iterative optimization models utilized in inverse problems.  
 
 \section{Theory}
 
@@ -59,6 +61,16 @@ To define a shift-invariant normal operator, the authors made the following defi
 \end{theorem}
 where $J_\phi$ is the Jacobian matrix.
 
+\begin{proof}
+    \begin{align}
+        H^\ast H &= \mathcal{F}^\ast ({\Phi_\phi}^{-1})^\ast \underbrace{M_m^\ast \underbrace{T^\ast T}_{I} M_m}_{M_{{|m|}^2}} {\Phi_\phi}^{-1} \mathcal{F} \label{eq:proof1}\\ 
+        H^\ast H &= \mathcal{F}^\ast ({\Phi_\phi}^{-1}) M_{|m|}^2 {\Phi_\phi}^{-1} \mathcal{F} \label{eq:proof2}\\
+        (\Phi_\phi^{-1})^\ast &= |det J_\phi|\Phi_\phi \label{eq:proof3}\\
+        H^\ast H &= \mathcal{F}^\ast |det J_\phi| M_{\Phi_\phi|m|}^2  \mathcal{F} \label{eq:proof4}
+    \end{align}
+    where the definition \ref{eq:proof3} is used in \Cref{eq:proof4} where the order of the change of variables and multiplications are exchanged with a change of variables in the multiplying kernel. \Cref{eq:proof4} is a multiplication in Fourier domain and the inversion following it, hence it is a convolution.
+\end{proof}
+
 \subsection{Forward Model of X-Ray CT Problem}
 The main focus of the paper is reconstructing the X-ray CT image from low-view projections. When we consider the forward model as the 2 dimensional X-Ray Transform $R: L_2()\mathbb{R}^2) \rightarrow L_2([0,2\pi) \times \mathbb{R})$, also known as Radon Transform, we can express it using Fourier Slice Theorem as follows: 
 \begin{equation}
@@ -66,14 +78,22 @@ The main focus of the paper is reconstructing the X-ray CT image from low-view p
     \label{eq:RadonTransform}
 \end{equation}
 
+
+where the coordinate transformation operation is defined as conversion from Cartesian to polar coordinates and $T$ is inverse Fourier transform with respect to 2D Fourier transform's radial variable $w$. The operation expressed by Eqn. \ref{eq:RadonTransform} takes the Fourier transform of the image, express the resultant signal in polar coordinates ($\Phi^{-1}(\theta, r) = (r\cos\theta,r\sin\theta)$) and takes the inverse Fourier transform. This process is equivalent to the operation of Projection Slice Theorem illustrated in \Cref{fig:radonimg}. Theorem \ref{thrm:Theorem1} states that $R^\ast R$ is a convolution with $\frac{1}{||w||}$ where w is the frequency variable for the 2D Fourier transform and $M_m$ in \Cref{thrm:Theorem1} is multiplication by identity. 
+
+\begin{proof}
+    \begin{align}
+        R &= T {\Phi_\phi}^{-1} \mathcal{F} \\
+        R^\ast R &=  \mathcal{F}^\ast |det J_\phi| \mathcal{F} \ \ (\ref{eq:proof4}) \\
+    \end{align}
+    where $det J_\Phi$ is $\frac{1}{||r||}$ in the polar space domain and $det J_\Phi(w)$ is $\frac{1}{||w||}$ in polar frequency domain.
+\end{proof}
+
 \begin{figure}[h]
-\centering
-\includegraphics[width=0.8\textwidth]{images/images.png}
-\caption{Illustration of reconstruction via Radon Transform \cite{radonimg}}\label{fig:radonimg}
-\end{figure}
-
-where the coordinate transformation operation is defined as conversion from Cartesian to polar coordinates and $T$ is inverse Fourier transform. The operation expressed by Eqn. \ref{eq:RadonTransform} takes the Fourier transform of the image, express the resultant signal in polar coordinates and takes the inverse Fourier transform. This process is illustrated in Figure \ref{fig:radonimg}. Theorem \ref{thrm:Theorem1} states that $R^\ast R$ is a convolution with $\frac{1}{||w||}$ where w is the frequency variable for the 2D Fourier transform. 
-
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/slicethm.png}
+    \caption{Projection slice theorem's illustration \cite{kooi_2021}}\label{fig:radonimg}
+    \end{figure}
 \subsection{Direct Inversion}
 
 One may apply direct inversion methods to solve the inverse problem of tomography, \textit{i.e.}, obtaining the image from measurements. The problem can be formulated as $g=Hf$ where $H$ is a normal convolutional operator. According to \cite{FBPConvNet}, the solution can be obtained by direction inversion in two ways as follows: 
@@ -83,7 +103,7 @@ One may apply direct inversion methods to solve the inverse problem of tomograph
     f &= H^\ast T M_h T^\ast g \label{eq:inv2}
 \end{align}
 
-where $W_h$ in \Cref{eq:inv1} is the convolution operator with $\frac{1}{|det J_\phi|\Phi_\phi|m(w)|^2}$ and $M_h$ is $\frac{1}{|det J_\phi||m(w)|^2}$. The physical interpretation behind these equations can be considered as follows: The operation in \Cref{eq:inv1} corresponds to the deconvolution in the reconstruction space, whereas \Cref{eq:inv2} corresponds to a filtering operation in Fourier domain followed by a back- projection, if $T$ is Fourier transform. 
+where $W_h$ in \Cref{eq:inv1} is the convolution operator with $\frac{1}{|det J_\phi|\Phi_\phi|m(w)|^2}$ and $M_h$ is $\frac{1}{|det J_\phi||m(w)|^2}$. The physical interpretation behind these equations can be considered as follows: The operation in \Cref{eq:inv1} corresponds to the deconvolution in the reconstruction space, whereas \Cref{eq:inv2} corresponds to a filtering operation in Fourier domain followed by a back- projection, if $T$ is Fourier transform, which is called filtered back projection(FBP) where the projections are filtered with $||w||$ in the 2D polar Fourier transform domain. 
 
 \subsection{Iterative Inversion}
 
@@ -91,10 +111,20 @@ There also exist iterative approaches to solving inverse problems and they are f
 
 \begin{equation}
     \operatorname*{argmin}_a ||y-HWa||_2^2 + \lambda ||a||_1 
+    \label{eq:TV}
 \end{equation}
 
-where $x = Wa$ and $a$ is a sparse representation of x in a domain where x is transformed to by $W$.
+where $x = Wa$ and $a$ is a sparse representation of x in a domain where x is transformed to by $W$. Since, this formulation does not produce a closed form solution, the equation is solved iteratively. 
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{images/ISTA_block.png}
+\caption{Block diagrams \cite{FBPConvNet} for (a) unfolded version \cite{ISTAnew} of iterative shrinkage method \cite{ISTA} with sparsifying transform W (b) and the corresponding block for CNN (c), where L is the Lipschitz constant, $x_0$ is the initial estimates,$b_i$ is the learned bias and $w_i$ is the trainable weights.}\label{fig:blocks}
+\end{figure}
+
+In Figure \Cref{fig:blocks}, the authors focus on the iterative procedures that utilizes sparsifying transforms and investigate the relationship between using the CNN and these methods. In (a) of \Cref{fig:blocks}, we observe that every iteration we encounter the normal operator. In (b), where a sparsifying transformation is used, we again have the normal operator in the unrolled iteration steps. These blocks including filtering by an operator that includes the normal operator along with the sparsifying transformation which usually can be expresseda s convolutions, an additive bias per each iteration followed by a pointwise nonlinearity.  
+
+\vfill\null\newpage
 \section{Proposed Method: FBPConvNet}
 
 The authors state that the filtering and pointwise linearity operations in the iterative reconstruction methods may suggest that CNNs may be a good fit for the solution of the inverse problems. 
@@ -116,41 +146,65 @@ The design of the proposed network was based on U-Net. The modified architecture
 
 The authors summarized the reasons for basing their architecture on U-Net as follows: 
 \begin{itemize}
-    \item \textit{Multilevel Decomposition:} The use of pooling kernels with different sizes help the network effectively invert $H^\ast H$. 
-    \item \textit{Multichannel filtering:} The convolutional kernels have the ability to make arbitrary combinations of channels, analogous to wavelet subbands in ISTA or split variables in ADMM. 
-    \item \textit{Residual Connection:} In addition to the original U-Net work, the authors added a skip connection between the input and output, allowing the network to learn the difference between the input and output. These connections have significant improvement in overcoming the gradient vanishing problem. 
-    \item \textit{Last Layer:} The last layer of the network is replaced with a convolution layer, since the original U-Net implementation has 2 channels: foreground and background. 
+    \item \textit{Multilevel Decomposition:} The use of convolut The use of pooling kernels with different sizes help the network effectively invert $H^\ast H$. The usage of pooling makes the effective filter sizes in the middle layers larger than that of earlier and later layers. If the normal operator has a non-compact support, the different sizes of Fourier transforms corresponding to these different sizes provide more level of decompositions.
+    \item \textit{Multichannel filtering:} The convolutional kernels have the ability to make arbitrary combinations of channels, analogous to wavelet subbands in ISTA or split variables in ADMM, that computes the solution in multiple channels or split variables. 
+    \item \textit{Skip Connection for residual learning:} In addition to the original U-Net work, the authors added a skip connection between the input and output, allowing the network to learn the difference between the input and output. These connections have significant improvement in overcoming the gradient vanishing problem. 
+    \item \textit{Last Layer:} The last layer of the network is replaced with a 1 $\times$ 1 convolution layer, since the original U-Net implementation has 2 channels: foreground and background. 
 \end{itemize}
 
 \subsection{Experiments}
 
-Jin \textit{et al.} begin the reconstruction via full view sinogram from both real and simulated data. Then the reconstruction is performed on the subsampled sinogram. This type of procedure holds an important place in human imaging because lowering the views lower the radiation dose received by the patient. The full-view filtered back projection data is used as ground truth images, rather than the actual image, since the authors believe that this is a more realistic setting in practice and the oracle information will never be available in CT. 
+Jin \textit{et al.} begin the reconstruction via full view sinogram from both real and simulated data. Then the reconstruction is performed on the subsampled sinogram. This type of procedure holds an important place in human imaging because lowering the views lower the radiation dose received by the patient. The full-view filtered back projection data is used as ground truth images, rather than the actual image, since the authors point out that this is a more realistic setting in practice since the oracle information will never be available in CT. The results are compared with the filtered back projection and method introduced in \cite{mccann2016fast} that solves \Cref{eq:TV} via ADMM. 
 
+\subsection{Training the Network}
 
-\subsection{Training Procedure}
-
+\subsubsection{Data}
 The sample size of the train and test splits of the datasets are given in \Cref{tab:dataset}. 
 
 \begin{table}[h]
     \centering
-        \caption{Samples for Datasets}
+        \caption{Sample size for Datasets}
 \begin{tabular}{|c|c|c|c|}
 \hline 
 \diagbox{Dataset}{Split} & \makecell{Training Data} & \makecell{Test Data} & Total \\ 
 \hline 
-Synthetic (Ellipsoidal) & 475 & 25 & 500 \\ 
-Real (Biomedical) & 327 & 25 & 352 \\ 
-\hline 
+Ellipsoid & 475 & 25 & 500 \\ 
+Biomedical & \makecell{Scans from subjects \\ except one} & \makecell{Scans from the \\remaining subject} & 500 \\ 
+Experimental & 327 & 25 & 377 \\ \hline 
 \end{tabular}
     \label{tab:dataset}
 \end{table}
 
-The CNN part of the network is trained with pairs of low view and full view FBP images. To reduce the overfitting, data augmentation is realized by mirroring the images in both vertical and horizontal directions. To prevent the cost function from diverging, the gradient clipping procedure is applied. The hyperparameters for state-of-the-art TV reconstruction \cite{TV} for comparison study is set experimentally by hand. 
+The sinograms for ellipsoid dataset comprises of ellipses of random intensity, size and location. For the FBP implementation MATLAB's \texttt{iradon} function was utilized in both the original and replicated study. Sinograms for this dataset are 729 pixels by 1000 view. The biomedical dataset is from the Low-dose Grand challenge competition made by Mayo clinic and test data is formed by the scan of a subject whose scans were not in the training data. The sinograms are generated by the same approach in ellipsoid dataset. The experimental dataset comprises 377 sinograms from a real CT dataset collected from an experiment at the Paul Scherrer Institute. Each sinogram is 1493 pizels by 721 views and comes from one z-slice of a single rat brain. The image intensity dynamic range is set between -500 and 500.
+
+\subsubsection{Training Procedure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/IFLOW.png}
+    \caption{Information flow in the proposed framework}\label{fig:iflow}
+\end{figure}
+
+
+The proposed CNN is trained with pairs of low view and full view FBP images (see \Cref{fig:iflow}) in MATLAB R2022(The MathWorks, Inc., Natick, Massachusetts, United States) using MatConvNet \cite{vedaldi2015matconvnet}. To reduce the overfitting, data augmentation is realized by mirroring the images in both vertical and horizontal directions. The training hyperparameters are set as follows: 
+
+\begin{itemize}
+\begin{multicols}{3}
+    \item Gradient clipping: $10^{-2}$.
+    \item Learning rate: [0.01,0.001]
+    \item Loss: MSE (Euclidean Loss)
+    \item Batchsize: 1
+    \item Momentum: 0.99
+    \item Optimizer: SGD
+    \end{multicols}
+\end{itemize}
+
+The hyperparameters batchsize and learning rate are updated in the most recent repository.
 
 \section{Results and Discussion}
 
 \subsection{Reconstruction Performance Metrics}
-The authors use SNR as a quantitative metric. The SNR of the reconstruction $\hat{x}$ with the ground truth image $x$ is given by \Cref*{eqn:SNR}.
+The authors use SNR as a quantitative metric. The SNR of the reconstruction $\hat{x}$ with the ground truth image $x$ is given by \Cref{eqn:SNR}.
 
 \begin{equation}
     SNR = \operatorname*{max}_{a,b \in \mathbb{R}} \frac{||x||_2}{||x - a\hat{x} + b||_2}
@@ -159,20 +213,77 @@ The authors use SNR as a quantitative metric. The SNR of the reconstruction $\ha
 
 \subsection{Sample Reconstructions}
 
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.8\textwidth]{images/results1.png}
+% \caption{Reconstructed images of biomedical dataset from 143 views}\label{fig:res1}
+% \end{figure}
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{images/results2.png}
+%     \caption{Reconstructed images of experimental dataset from 145 views}\label{fig:res2}
+% \end{figure}
+
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.8\textwidth]{images/results1.png}
-\caption{Reconstructed images of biomedical dataset from 143 views}\label{fig:res1}
+\begin{subfigure}[b]{0.75\textwidth}
+\centering
+\includegraphics[width=\textwidth]{images/results1.png}
+\caption{Biomedical Dataset: 50 views}\label{subfig:a}
+\end{subfigure}
+\\
+\begin{subfigure}[b]{0.75\linewidth}
+\centering
+\includegraphics[width=\textwidth]{images/results2.png}
+\caption{Experimental Dataset: 145 views}\label{subfig:b}
+\end{subfigure}
+\caption{Reconstruction comparisons for different datasets}
+\label{fig:recs}
 \end{figure}
+
+The results of the experiments showed that the choice of CNN for the set of inverse problems where the forward model is convolution is suitable. In both \Cref{subfig:a} and \Cref{subfig:b} the reconstruction performance of the FBPConvNet against back projection can be observed qualitatively. The proposed method yields compelling results in both real and synthetic data. It outperformed iterative reconstruction method \cite{TV}. For a subsampling factor of 7 (143 views) the SNR of the recostructed image is 35.58dB SNR whereas for subsampling factor of 20 (50 views) it was 11.44 dB SNR. 
+
+\begin{table}[h]
+\caption{\label{tab:res1}Results for Biomedical Dataset}
+\centering{
+\begin{tabular}{|c|ccc|} \hline
+    \diagbox{Metrics}{Methods} & FBP & TV \cite{TV} & FBPConvNet \\ \hline
+    SNR for 143 views & 24.97 & 31.92 & 36.15 \\
+    SNR for 50 views & 13.52 & 25.2 & 28.83 \\ \hline
+\end{tabular}}
+\end{table}
+
+\begin{table}[h]
+    \caption{\label{tab:res2}Results for Experimental Dataset}
+    \centering{
+    \begin{tabular}{|c|ccc|} \hline
+        \diagbox{Metrics}{Methods} & FBP & TV \cite{TV} & FBPConvNet \\ \hline
+        SNR for 143 views & 5.38 & 8.25 & 11.34 \\
+        SNR for 50 views & 3.29 & 7.25 & 8.85 \\ \hline
+    \end{tabular}}
+    \end{table}
+    
+As we observe in \Cref{tab:res2}, the performance of the proposed network is lower in the experimental dataset and for lower views. We are able to see this trend in \Cref{fig:compareview} where the network is trained with 143 views and tested with different views. We observe that the SNR of reconstruction drop monotonically with increasing subsampling factors of decreasing number of views. 
 
 \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/results2.png}
-    \caption{Reconstructed images of experimental dataset from 145 views}\label{fig:res2}
+\centering
+\includegraphics[width=0.6\textwidth]{images/viewscompare.png}
+\caption{Performance with different number of views}\label{fig:compareview}
 \end{figure}
 
-The results of the experiments showed that the choice of CNN for the set of inverse problems where the forward model is convolution is suitable. In both \Cref*{fig:res1} and \Cref*{fig:res2} the denoising performance of the FBPConvNet against back projection can be observed qualitatively. The proposed method yields compelling results in both real and synthetic data. It outperformed when the state-of-the-art iterative reconstruction methods. Once the training is finished, the computation time for an image is computed to be under a second. 
+\clearpage
 
+\subsection{Replicated Experiment and Results}
+
+Two models are trained for 10 and 20 epochs with according scaled initial learning rates with respect to 100 epochs using the ellipsoid dataset provided in the original repository of the study. The better model is used in the evaluation of different testing configurations. 
+
+\subsubsection{Testing on Ellipsoid Dataset}
+
+
+
+
+\clearpage
 \printbibliography
 
 \end{document}
