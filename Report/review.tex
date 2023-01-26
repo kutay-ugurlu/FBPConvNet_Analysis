@@ -79,14 +79,14 @@ The main focus of the paper is reconstructing the X-ray CT image from low-view p
 \end{equation}
 
 
-where the coordinate transformation operation is defined as conversion from Cartesian to polar coordinates and $T$ is inverse Fourier transform in terms of 2D Fourier transform's radial variable $w$. The operation expressed by Eqn. \ref{eq:RadonTransform} takes the Fourier transform of the image, expresses the resultant signal in polar coordinates ($\Phi^{-1}(\theta, r) = (r\cos\theta,r\sin\theta)$) and takes the inverse Fourier transform. This process is equivalent to the operation of the projection slice theorem illustrated in \Cref{fig:radonimg}. Theorem \ref{thrm:Theorem1} states that $R^\ast R$ is a convolution with $\frac{1}{||w||}$ where w is the frequency variable for the 2D Fourier transform and $M_m$ in \Cref{thrm:Theorem1} is multiplication by identity. 
+where the coordinate transformation operation is defined as conversion from Cartesian to polar coordinates and $T$ is inverse Fourier transform in terms of 2D Fourier transform's radial variable $w$. The operation expressed by Eqn. \ref{eq:RadonTransform} takes the Fourier transform of the image, expresses the resultant signal in polar coordinates ($\Phi^{-1}(\theta, r) = (r\cos\theta,r\sin\theta)$) and takes the inverse Fourier transform. This process is equivalent to the operation of the projection slice theorem illustrated in \Cref{fig:radonimg}. Theorem \ref{thrm:Theorem1} states that $R^\ast R$ is a convolution with $\frac{1}{|w|}$ where w is the frequency variable for the 2D Fourier transform and $M_m$ in \Cref{thrm:Theorem1} is multiplication by identity. 
 
 \begin{proof}
     \begin{align}
         R &= T {\Phi_\phi}^{-1} \mathcal{F} \\
         R^\ast R &=  \mathcal{F}^\ast |det J_\phi| \mathcal{F} \ \ (\ref{eq:proof4}) \\
     \end{align}
-    where $det J_\Phi$ is $\frac{1}{||r||}$ in the polar space domain and $det J_\Phi(w)$ is $\frac{1}{||w||}$ in polar frequency domain.
+    where $det J_\Phi$ is $\frac{1}{|r|}$ in the polar space domain and $det J_\Phi(w)$ is $\frac{1}{|w|}$ in polar frequency domain.
 \end{proof}
 
 \begin{figure}[h]
@@ -324,8 +324,8 @@ Different sub-datasets are generated with noise and without noise and for a diff
 \end{table}
 
 \begin{equation}
-    SNR_{noise}: \frac{P_{signal}}{P_{noise}} = \frac{\sum |signal|^2}{|noise|^2
-    \label{eq:noisesnr}} 
+    SNR_{noise}: \frac{P_{signal}}{P_{noise}} = \frac{\sum\limits_n |signal(n)|^2}{\sum\limits_n |noise(n)|^2}
+    \label{eq:noisesnr}
 \end{equation}
 
 The experiments took 4 seconds per test image on CPU on average and they show that the trained model's performance peaks when  
